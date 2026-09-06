@@ -1,6 +1,12 @@
 # Pilates Booking API 🧘‍♀️✨
 
-API RESTful desarrollada con **Java 21** y **Spring Boot 3** para la gestión integral de reservas, cupos y horarios en un estudio de Pilates.
+<p align="left">
+  <img src="https://img.shields.io/badge/JAVA_21-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 21" />
+  <img src="https://img.shields.io/badge/SPRING_BOOT-6DB33F?style=for-the-badge&logo=springboot&logoColor=white" alt="Spring Boot" />
+  <img src="https://img.shields.io/badge/GIT-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git" />
+</p>
+
+(en desarrollo) API RESTful desarrollada con **Java 21** y **Spring Boot 3** para la gestión integral de reservas, cupos y horarios en un estudio de Pilates.
 
 ---
 
@@ -27,4 +33,28 @@ API RESTful desarrollada con **Java 21** y **Spring Boot 3** para la gestión in
 
 El modelo de datos relacional optimizado para la gestión de cupos y transacciones:
 
-<img width="862" height="706" alt="image" src="https://github.com/user-attachments/assets/2c03a49d-83ec-475d-8788-89befcf183eb" />
+<img width="50%" alt="image" src="https://github.com/user-attachments/assets/64220588-5b89-464e-a26b-259f06761091" />
+
+---
+
+## ⚙️ Configuración e Instalación
+Clonar repositorio:
+
+```
+git clone https://github.com/nky01/pilates-booking-api.git
+```
+
+Levantar PostgreSQL con Docker:
+```
+docker compose up -d
+```
+
+Ejecutar la aplicación:
+```
+./mvnw spring-boot:run
+```
+
+## 👩‍💻 Autora
+
+* **Nicole Belen Cayo** — Backend Developer
+* **GitHub:** [@nky01](https://github.com/nky01)
