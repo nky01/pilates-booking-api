@@ -1,21 +1,32 @@
 package com.nkydev.entity;
 
-import javax.management.relation.Role;
+import com.nkydev.enums.Role;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class User {
+@Entity
+@Table (name = "students")
+public class Student {
     private Integer id;
     private String fullName;
     private String email;
     private String password;
     private String phone;
-    private Role role;
+    private com.nkydev.enums.Role role;
     private LocalDateTime createdAt;
 
-    public User(){}
+    @OneToMany  // the student can have a lot of bookings
+    private List<Booking> booking = new ArrayList<>();
 
-    public User(Integer id, String fullName, String email, String password, String phone, Role role, LocalDateTime createdAt) {
+    public Student(){}
+
+    public Student(Integer id, String fullName, String email, String password, String phone, Role role, LocalDateTime createdAt, List<Booking> booking) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
@@ -23,6 +34,7 @@ public class User {
         this.phone = phone;
         this.role = role;
         this.createdAt = createdAt;
+        this.booking = booking;
     }
 
     public Integer getId() {
@@ -65,7 +77,7 @@ public class User {
         this.phone = phone;
     }
 
-    public Role getRole() {
+    public com.nkydev.enums.Role getRole() {
         return role;
     }
 
@@ -81,10 +93,18 @@ public class User {
         this.createdAt = createdAt;
     }
 
+    public List<Booking> getBooking() {
+        return booking;
+    }
+
+    public void setBooking(List<Booking> booking) {
+        this.booking = booking;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
+        Student user = (Student) o;
         return Objects.equals(id, user.id) && Objects.equals(fullName, user.fullName) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(phone, user.phone) && Objects.equals(role, user.role) && Objects.equals(createdAt, user.createdAt);
     }
 

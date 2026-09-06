@@ -1,7 +1,15 @@
 package com.nkydev.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "pilateclasses")
 public class PilateClass {
     private Integer id;
     private String name;
@@ -9,14 +17,18 @@ public class PilateClass {
     private Integer durationMinutes;
     private Integer maxCapacity;
 
+    @OneToMany
+    private List<Schedule> schedules= new ArrayList<>();
+
     public PilateClass(){}
 
-    public PilateClass(Integer id, String name, String description, Integer durationMinutes, Integer maxCapacity) {
+    public PilateClass(Integer id, String name, String description, Integer durationMinutes, Integer maxCapacity, List<Schedule> schedules) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.durationMinutes = durationMinutes;
         this.maxCapacity = maxCapacity;
+        this.schedules = schedules;
     }
 
     public Integer getId() {
@@ -57,6 +69,14 @@ public class PilateClass {
 
     public void setMaxCapacity(Integer maxCapacity) {
         this.maxCapacity = maxCapacity;
+    }
+
+    public List<Schedule> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(List<Schedule> schedules) {
+        this.schedules = schedules;
     }
 
     @Override
