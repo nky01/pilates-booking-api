@@ -21,7 +21,7 @@ public class Student {
     private com.nkydev.enums.Role role;
     private LocalDateTime createdAt;
 
-    @OneToMany  // the student can have a lot of bookings
+    @OneToMany
     private List<Booking> booking = new ArrayList<>();
 
     public Student(){}

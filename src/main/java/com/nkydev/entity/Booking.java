@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "bookings")
-public class Booking {
+public class Booking { // reservas confirmadas
     private Integer id;
     private LocalDateTime bookingDate;
     private BookingStatus status;

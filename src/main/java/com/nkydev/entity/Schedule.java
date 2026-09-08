@@ -12,7 +12,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "schedules")
-public class Schedule {
+public class Schedule { // turnos programados
     private Long id;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
@@ -21,6 +21,7 @@ public class Schedule {
 
     @OneToMany
     private PilateClass pilatesClass;
+
     @OneToMany
     private List<Booking> bookings = new ArrayList<>();
 

@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "pilateclasses")
-public class PilateClass {
+public class PilateClass { // los tipos de pilates
     private Integer id;
     private String name;
     private String description;
