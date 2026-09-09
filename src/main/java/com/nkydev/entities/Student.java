@@ -1,9 +1,7 @@
-package com.nkydev.entity;
+package com.nkydev.entities;
 
 import com.nkydev.enums.Role;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,20 +11,31 @@ import java.util.Objects;
 @Entity
 @Table (name = "students")
 public class Student {
-    private Integer id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
     private String fullName;
+
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
     private String password;
     private String phone;
+
+    @Enumerated(EnumType.STRING)
     private com.nkydev.enums.Role role;
     private LocalDateTime createdAt;
 
-    @OneToMany
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Booking> booking = new ArrayList<>();
 
     public Student(){}
 
-    public Student(Integer id, String fullName, String email, String password, String phone, Role role, LocalDateTime createdAt, List<Booking> booking) {
+    public Student(Long id, String fullName, String email, String password, String phone, Role role, LocalDateTime createdAt, List<Booking> booking) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
@@ -37,11 +46,11 @@ public class Student {
         this.booking = booking;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -1,8 +1,7 @@
-package com.nkydev.entity;
+package com.nkydev.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +9,18 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "pilateclasses")
-public class PilateClass { // los tipos de pilates
-    private Integer id;
+public class PilateClass {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
     private String name;
     private String description;
     private Integer durationMinutes;
+
+    @Column(nullable = false)
     private Integer maxCapacity;
 
     @OneToMany
@@ -22,7 +28,7 @@ public class PilateClass { // los tipos de pilates
 
     public PilateClass(){}
 
-    public PilateClass(Integer id, String name, String description, Integer durationMinutes, Integer maxCapacity, List<Schedule> schedules) {
+    public PilateClass(Long id, String name, String description, Integer durationMinutes, Integer maxCapacity, List<Schedule> schedules) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -31,11 +37,11 @@ public class PilateClass { // los tipos de pilates
         this.schedules = schedules;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

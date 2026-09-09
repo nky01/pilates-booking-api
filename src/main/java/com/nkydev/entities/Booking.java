@@ -1,8 +1,7 @@
-package com.nkydev.entity;
+package com.nkydev.entities;
 
 import com.nkydev.enums.BookingStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -10,23 +9,30 @@ import java.util.Objects;
 @Entity
 @Table(name = "bookings")
 public class Booking { // reservas confirmadas
-    private Integer id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
     private LocalDateTime bookingDate;
+
+    @Enumerated(EnumType.STRING)
     private BookingStatus status;
 
     public Booking(){}
 
-    public Booking(Integer id, LocalDateTime bookingDate, BookingStatus status) {
+    public Booking(Long id, LocalDateTime bookingDate, BookingStatus status) {
         this.id = id;
         this.bookingDate = bookingDate;
         this.status = status;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

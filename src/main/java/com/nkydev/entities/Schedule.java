@@ -1,9 +1,7 @@
-package com.nkydev.entity;
+package com.nkydev.entities;
 
 import com.nkydev.enums.ScheduleStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,14 +10,24 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "schedules")
-public class Schedule { // turnos programados
+public class Schedule {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private LocalDateTime startTime;
+
+    @Column(nullable = false)
     private LocalDateTime endTime;
     private Integer availableSlots;
+
+    @Enumerated(EnumType.STRING)
     private ScheduleStatus status;
 
-    @OneToMany
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pilate_class_id", nullable = false)
     private PilateClass pilatesClass;
 
     @OneToMany
