@@ -1,4 +1,4 @@
-package com.nkydev;
+package com.nkydev.services;
 
 import com.nkydev.repositories.PilateClassRepository;
 import org.springframework.stereotype.Service;

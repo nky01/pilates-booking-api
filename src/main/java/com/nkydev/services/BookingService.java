@@ -1,4 +1,4 @@
-package com.nkydev;
+package com.nkydev.services;
 
 import com.nkydev.repositories.BookingRepository;
 import org.springframework.stereotype.Service;

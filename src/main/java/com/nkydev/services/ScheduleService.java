@@ -1,4 +1,4 @@
-package com.nkydev;
+package com.nkydev.services;
 
 import com.nkydev.repositories.ScheduleRepository;
 import org.springframework.stereotype.Service;

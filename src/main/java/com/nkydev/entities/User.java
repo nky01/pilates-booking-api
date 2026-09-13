@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Table (name = "students")
-public class Student {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,11 +31,16 @@ public class Student {
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Booking> booking = new ArrayList<>();
+    private List<Booking> bookings = new ArrayList<>();
 
-    public Student(){}
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 
-    public Student(Long id, String fullName, String email, String password, String phone, Role role, LocalDateTime createdAt, List<Booking> booking) {
+    public User(){}
+
+    public User(Long id, String fullName, String email, String password, String phone, Role role, LocalDateTime createdAt, List<Booking> booking) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
@@ -43,55 +48,15 @@ public class Student {
         this.phone = phone;
         this.role = role;
         this.createdAt = createdAt;
-        this.booking = booking;
+        this.bookings = booking;
     }
 
-    public Long getId() {
-        return id;
+    public List<Booking> getBookings() {
+        return bookings;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public com.nkydev.enums.Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -102,18 +67,58 @@ public class Student {
         this.createdAt = createdAt;
     }
 
-    public List<Booking> getBooking() {
-        return booking;
+    public Role getRole() {
+        return role;
     }
 
-    public void setBooking(List<Booking> booking) {
-        this.booking = booking;
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Student user = (Student) o;
+        User user = (User) o;
         return Objects.equals(id, user.id) && Objects.equals(fullName, user.fullName) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(phone, user.phone) && Objects.equals(role, user.role) && Objects.equals(createdAt, user.createdAt);
     }
 
