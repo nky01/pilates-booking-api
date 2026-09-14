@@ -1,4 +1,4 @@
-package com.nkydev;
+package com.nkydev.DTOs.user;
 
 import com.nkydev.enums.Role;
 

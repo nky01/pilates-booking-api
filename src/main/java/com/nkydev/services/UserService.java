@@ -1,7 +1,7 @@
 package com.nkydev.services;
 
-import com.nkydev.UserRequestDTO;
-import com.nkydev.UserResponseDTO;
+import com.nkydev.DTOs.user.UserRequestDTO;
+import com.nkydev.DTOs.user.UserResponseDTO;
 import com.nkydev.entities.User;
 import com.nkydev.repositories.UserRepository;
 import jakarta.transaction.Transactional;

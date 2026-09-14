@@ -1,8 +1,7 @@
 package com.nkydev.controllers;
 
-import com.nkydev.UserRequestDTO;
-import com.nkydev.UserResponseDTO;
-import com.nkydev.entities.User;
+import com.nkydev.DTOs.user.UserRequestDTO;
+import com.nkydev.DTOs.user.UserResponseDTO;
 import com.nkydev.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
