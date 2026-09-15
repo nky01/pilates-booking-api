@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/pilateclasses/")
+@RequestMapping("api/v1/pilates_type/")
 public class PilatesTypeController {
 
     final private PilatesTypeService pilatesTypeService;
@@ -37,12 +37,12 @@ public class PilatesTypeController {
 
     @PutMapping("/{id}")
     public PilatesTypeResponseDTO updatePilatesType(@PathVariable Long id, @RequestBody PilatesTypeRequestDTO request){
-        return pilatesTypeService.updatePilatesType(request);
+        return pilatesTypeService.updatePilatesType(id, request);
     }
-    
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePilatesType(){
-        pilatesTypeService.deletePilatesType();
+    public void deletePilatesType(@PathVariable Long id){
+        pilatesTypeService.deletePilatesType(id);
     }
 }

@@ -4,8 +4,8 @@ import com.nkydev.DTOs.user.UserRequestDTO;
 import com.nkydev.DTOs.user.UserResponseDTO;
 import com.nkydev.entities.User;
 import com.nkydev.repositories.UserRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -31,6 +31,7 @@ public class UserService {
         return mapToResponseDTO(savedUser);
     }
 
+    @Transactional(readOnly = true)
     public List<UserResponseDTO> getAllUsers() {
         return userRepository.findAll()
                 .stream()
@@ -38,6 +39,7 @@ public class UserService {
                 .toList();
     }
 
+    @Transactional(readOnly = true)
     public UserResponseDTO getUserById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("user not found with ID: " + id));
