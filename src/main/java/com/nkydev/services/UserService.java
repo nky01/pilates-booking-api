@@ -71,8 +71,7 @@ public class UserService {
                 user.getFullName(),
                 user.getEmail(),
                 user.getPhone(),
-                user.getRole(),
-                user.getCreatedAt()
+                user.getRole()
         );
     }
 }

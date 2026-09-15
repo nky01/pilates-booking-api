@@ -1,15 +1,11 @@
 package com.nkydev.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "pilateclasses")
-public class PilateClass {
+@Table(name = "pilates_type")
+public class PilatesType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,24 +13,18 @@ public class PilateClass {
 
     @Column(nullable = false)
     private String name;
-    private String description;
     private Integer durationMinutes;
 
     @Column(nullable = false)
     private Integer maxCapacity;
 
-    @OneToMany
-    private List<Schedule> schedules= new ArrayList<>();
+    public PilatesType(){}
 
-    public PilateClass(){}
-
-    public PilateClass(Long id, String name, String description, Integer durationMinutes, Integer maxCapacity, List<Schedule> schedules) {
+    public PilatesType(Long id, String name, Integer durationMinutes, Integer maxCapacity) {
         this.id = id;
         this.name = name;
-        this.description = description;
         this.durationMinutes = durationMinutes;
         this.maxCapacity = maxCapacity;
-        this.schedules = schedules;
     }
 
     public Long getId() {
@@ -53,14 +43,6 @@ public class PilateClass {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public Integer getDurationMinutes() {
         return durationMinutes;
     }
@@ -77,23 +59,15 @@ public class PilateClass {
         this.maxCapacity = maxCapacity;
     }
 
-    public List<Schedule> getSchedules() {
-        return schedules;
-    }
-
-    public void setSchedules(List<Schedule> schedules) {
-        this.schedules = schedules;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        PilateClass that = (PilateClass) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(durationMinutes, that.durationMinutes) && Objects.equals(maxCapacity, that.maxCapacity);
+        PilatesType that = (PilatesType) o;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(durationMinutes, that.durationMinutes) && Objects.equals(maxCapacity, that.maxCapacity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, durationMinutes, maxCapacity);
+        return Objects.hash(id, name, durationMinutes, maxCapacity);
     }
 }

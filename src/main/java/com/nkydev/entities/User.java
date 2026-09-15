@@ -3,13 +3,12 @@ package com.nkydev.entities;
 import com.nkydev.enums.Role;
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table (name = "students")
+@Table (name = "users")
 public class User {
 
     @Id
@@ -28,26 +27,19 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private com.nkydev.enums.Role role;
-    private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Booking> bookings = new ArrayList<>();
-
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
 
     public User(){}
 
-    public User(Long id, String fullName, String email, String password, String phone, Role role, LocalDateTime createdAt, List<Booking> booking) {
+    public User(Long id, String fullName, String email, String password, String phone, Role role, List<Booking> booking) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.password = password;
         this.phone = phone;
         this.role = role;
-        this.createdAt = createdAt;
         this.bookings = booking;
     }
 
@@ -57,14 +49,6 @@ public class User {
 
     public void setBookings(List<Booking> bookings) {
         this.bookings = bookings;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
     }
 
     public Role getRole() {
@@ -119,11 +103,11 @@ public class User {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(fullName, user.fullName) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(phone, user.phone) && Objects.equals(role, user.role) && Objects.equals(createdAt, user.createdAt);
+        return Objects.equals(id, user.id) && Objects.equals(fullName, user.fullName) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(phone, user.phone) && Objects.equals(role, user.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, fullName, email, password, phone, role, createdAt);
+        return Objects.hash(id, fullName, email, password, phone, role);
     }
 }

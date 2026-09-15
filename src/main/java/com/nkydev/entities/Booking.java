@@ -3,7 +3,9 @@ package com.nkydev.entities;
 import com.nkydev.enums.BookingStatus;
 import jakarta.persistence.*;
 
+import java.sql.Time;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -15,17 +17,31 @@ public class Booking { // reservas confirmadas
     private Long id;
 
     @Column(nullable = false)
-    private LocalDateTime bookingDate;
+    private Date date;
+
+    @Column(nullable = false)
+    private Time time;
 
     @Enumerated(EnumType.STRING)
     private BookingStatus status;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id", nullable = false)
+    private User student;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "schedule_id", nullable = false)
+    private ClassSession classSession;
+
     public Booking(){}
 
-    public Booking(Long id, LocalDateTime bookingDate, BookingStatus status) {
+    public Booking(Long id, Date date, Time time, BookingStatus status, User student, ClassSession classSession) {
         this.id = id;
-        this.bookingDate = bookingDate;
+        this.date = date;
+        this.time = time;
         this.status = status;
+        this.student = student;
+        this.classSession = classSession;
     }
 
     public Long getId() {
@@ -36,12 +52,20 @@ public class Booking { // reservas confirmadas
         this.id = id;
     }
 
-    public LocalDateTime getBookingDate() {
-        return bookingDate;
+    public Date getDate() {
+        return date;
     }
 
-    public void setBookingDate(LocalDateTime bookingDate) {
-        this.bookingDate = bookingDate;
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Time getTime() {
+        return time;
+    }
+
+    public void setTime(Time time) {
+        this.time = time;
     }
 
     public BookingStatus getStatus() {
@@ -52,15 +76,31 @@ public class Booking { // reservas confirmadas
         this.status = status;
     }
 
+    public User getStudent() {
+        return student;
+    }
+
+    public void setStudent(User student) {
+        this.student = student;
+    }
+
+    public ClassSession getClassSession() {
+        return classSession;
+    }
+
+    public void setClassSession(ClassSession classSession) {
+        this.classSession = classSession;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Booking booking = (Booking) o;
-        return Objects.equals(id, booking.id) && Objects.equals(bookingDate, booking.bookingDate) && status == booking.status;
+        return Objects.equals(id, booking.id) && Objects.equals(date, booking.date) && Objects.equals(time, booking.time) && status == booking.status && Objects.equals(student, booking.student) && Objects.equals(classSession, booking.classSession);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, bookingDate, status);
+        return Objects.hash(id, date, time, status, student, classSession);
     }
 }

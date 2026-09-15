@@ -1,6 +1,6 @@
 package com.nkydev.enums;
 
-public enum ScheduleStatus {
+public enum ClassStatus {
     SCHEDULED,
     COMPLETED,
     CANCELLED
