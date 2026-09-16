@@ -10,4 +10,8 @@ public class ClassSessionService {
     public ClassSessionService(ClassSessionRepository classSessionRepository) {
         this.classSessionRepository = classSessionRepository;
     }
+
+    public void deleteClass(Long id) {
+        classSessionRepository.deleteById(id);
+    }
 }
