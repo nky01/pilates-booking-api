@@ -6,6 +6,8 @@ import com.nkydev.services.ClassSessionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("api/v1/classes/")
 public class ClassController {
@@ -16,6 +18,16 @@ public class ClassController {
         this.classSessionService = classSessionService;
     }
 
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ClassSessionResponseDTO createClass(@RequestBody ClassSessionRequestDTO request) {
+        return classSessionService.createClass(request);
+    }
+
+    @GetMapping
+    public List<ClassSessionResponseDTO> getClasses(){
+        return classSessionService.getAllClasses();
+    }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

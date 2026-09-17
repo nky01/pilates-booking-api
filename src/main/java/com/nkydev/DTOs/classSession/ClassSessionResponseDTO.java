@@ -2,14 +2,14 @@ package com.nkydev.DTOs.classSession;
 
 import com.nkydev.enums.ClassStatus;
 
-import java.sql.Time;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public record ClassSessionResponseDTO(
         Long id,
-        Date date,
-        Time startTime,
-        Time endTime,
+        LocalDate date,
+        LocalTime startTime,
+        LocalTime endTime,
         Integer machines,
         ClassStatus status
 ) {}

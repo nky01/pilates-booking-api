@@ -1,11 +1,13 @@
 package com.nkydev.DTOs.classSession;
 
-import java.sql.Time;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public record ClassSessionRequestDTO(
-         Date date,
-         Time startTime,
-         Time endTime,
-         Integer machines
+         LocalDate date,
+         LocalTime startTime,
+         LocalTime endTime,
+         Integer machines,
+         Long pilatesTypeId,
+         Long teacherId
 ) {}
