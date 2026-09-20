@@ -11,7 +11,6 @@ import com.nkydev.repositories.ClassSessionRepository;
 import com.nkydev.repositories.PilatesTypeRepository;
 import com.nkydev.repositories.UserRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -42,7 +41,7 @@ public class ClassSessionService {
                 .orElseThrow(()-> new RuntimeException("Pilates type not found with ID: " + request.pilatesTypeId()));
 
         if (!request.startTime().isBefore(request.endTime())){
-            throw new RuntimeException("Start time must be before the end time");
+            throw new RuntimeException("Start time must be before the End Time");
         }
 
         LocalDateTime classStartDateTime= LocalDateTime.of(request.date(), request.startTime());
@@ -61,6 +60,10 @@ public class ClassSessionService {
             throw new RuntimeException("Teacher already has a class scheduled during this time");
         }
 
+        if (request.machines() < 1 || request.machines() > pilatesType.getMaxCapacity()) {
+            throw new RuntimeException("The count of machines must be between 1 and " + pilatesType.getMaxCapacity());
+        }
+
         ClassSession newClass = new ClassSession();
         newClass.setDate(request.date());
         newClass.setStartTime(request.startTime());
@@ -75,7 +78,6 @@ public class ClassSessionService {
         return mapToClass(classSaved);
     }
 
-    @GetMapping
     public List<ClassSessionResponseDTO> getAllClasses(){
         return classSessionRepository.findAll()
                 .stream()
