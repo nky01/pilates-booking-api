@@ -3,9 +3,8 @@ package com.nkydev.entities;
 import com.nkydev.enums.BookingStatus;
 import jakarta.persistence.*;
 
-import java.sql.Time;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Objects;
 
 @Entity
@@ -17,10 +16,10 @@ public class Booking { // reservas confirmadas
     private Long id;
 
     @Column(nullable = false)
-    private Date date;
+    private LocalDate date;
 
     @Column(nullable = false)
-    private Time time;
+    private LocalTime time;
 
     @Enumerated(EnumType.STRING)
     private BookingStatus status;
@@ -35,7 +34,7 @@ public class Booking { // reservas confirmadas
 
     public Booking(){}
 
-    public Booking(Long id, Date date, Time time, BookingStatus status, User student, ClassSession classSession) {
+    public Booking(Long id, LocalDate date, LocalTime time, BookingStatus status, User student, ClassSession classSession) {
         this.id = id;
         this.date = date;
         this.time = time;
@@ -52,19 +51,19 @@ public class Booking { // reservas confirmadas
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public Time getTime() {
+    public LocalTime getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(LocalTime time) {
         this.time = time;
     }
 
