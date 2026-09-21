@@ -11,8 +11,11 @@ import com.nkydev.repositories.ClassSessionRepository;
 import com.nkydev.repositories.PilatesTypeRepository;
 import com.nkydev.repositories.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -28,6 +31,7 @@ public class ClassSessionService {
         this.pilatesTypeRepository = pilatesTypeRepository;
     }
 
+    @Transactional
     public ClassSessionResponseDTO createClass(ClassSessionRequestDTO request){
 
         User teacher = userRepository.findById(request.teacherId())
@@ -49,7 +53,7 @@ public class ClassSessionService {
             throw new RuntimeException("Class date and time must be in the future");
         }
 
-        boolean hasOverlap = classSessionRepository.existsByTeacherIdAndDateAndStartTimeLessThanAndEndTimeGreaterThan(
+        boolean hasOverlap = classSessionRepository.existByTeacherInClassSession(
                 request.teacherId(),
                 request.date(),
                 request.endTime(),
@@ -78,11 +82,79 @@ public class ClassSessionService {
         return mapToClass(classSaved);
     }
 
+    @Transactional(readOnly = true)
     public List<ClassSessionResponseDTO> getAllClasses(){
         return classSessionRepository.findAll()
                 .stream()
                 .map(this::mapToClass)
                 .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public ClassSessionResponseDTO getClassById(Long id){
+        ClassSession classSession = classSessionRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Class not found with ID: " + id));
+
+        return mapToClass(classSession);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ClassSessionResponseDTO> getAvailableClasses(){
+        LocalDate today = LocalDate.now();
+        LocalTime now= LocalTime.now();
+
+        return classSessionRepository.findAvailableClass(ClassStatus.SCHEDULED, today, now)
+                .stream()
+                .map(this::mapToClass)
+                .toList();
+    }
+
+    @Transactional
+    public ClassSessionResponseDTO updateClass(Long id, ClassSessionRequestDTO request) {
+        ClassSession classSession = classSessionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Class not found with ID: " + id));
+
+        User teacher = userRepository.findById(request.teacherId())
+                .orElseThrow(() -> new RuntimeException("Teacher not found with ID: " + request.teacherId()));
+
+        if (teacher.getRole() != Role.TEACHER) {
+            throw new RuntimeException("The user isn't a TEACHER");
+        }
+
+        PilatesType pilatesType = pilatesTypeRepository.findById(request.pilatesTypeId())
+                .orElseThrow(() -> new RuntimeException("Pilates type not found with ID: " + request.pilatesTypeId()));
+
+        if (!request.startTime().isBefore(request.endTime())) {
+            throw new RuntimeException("Start time must be before the End Time");
+        }
+
+        LocalDateTime classStartDateTime = LocalDateTime.of(request.date(), request.startTime());
+        if (classStartDateTime.isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("Class date and time must be in the future");
+        }
+
+        if (request.machines() < 1 || request.machines() > pilatesType.getMaxCapacity()) {
+            throw new RuntimeException("The count of machines must be between 1 and " + pilatesType.getMaxCapacity());
+        }
+
+        classSession.setDate(request.date());
+        classSession.setStartTime(request.startTime());
+        classSession.setEndTime(request.endTime());
+        classSession.setMachines(request.machines());
+        classSession.setTeacher(teacher);
+        classSession.setPilatesType(pilatesType);
+
+        return mapToClass(classSession);
+    }
+
+    @Transactional
+    public ClassSessionResponseDTO updateClassStatus(Long id, ClassStatus newStatus) {
+        ClassSession classSession = classSessionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Class not found with ID: " + id));
+
+        classSession.setStatus(newStatus);
+
+        return mapToClass(classSession);
     }
 
     public void deleteClass(Long id) {

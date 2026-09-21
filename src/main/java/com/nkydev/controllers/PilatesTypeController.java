@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/pilates_type/")
+@RequestMapping("/api/v1/pilates_type")
 public class PilatesTypeController {
 
     final private PilatesTypeService pilatesTypeService;

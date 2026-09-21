@@ -2,6 +2,7 @@ package com.nkydev.controllers;
 
 import com.nkydev.DTOs.classSession.ClassSessionRequestDTO;
 import com.nkydev.DTOs.classSession.ClassSessionResponseDTO;
+import com.nkydev.enums.ClassStatus;
 import com.nkydev.services.ClassSessionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/classes/")
+@RequestMapping("/api/v1/classes")
 public class ClassController {
 
     final private ClassSessionService classSessionService;
@@ -25,8 +26,28 @@ public class ClassController {
     }
 
     @GetMapping
-    public List<ClassSessionResponseDTO> getClasses(){
+    public List<ClassSessionResponseDTO> getAllClasses(){
         return classSessionService.getAllClasses();
+    }
+
+    @GetMapping("/{id}")
+    public ClassSessionResponseDTO getClassById(@PathVariable Long id){
+        return classSessionService.getClassById(id);
+    }
+
+    @GetMapping("/available")
+    public List<ClassSessionResponseDTO> getAvailableClasses(){
+        return classSessionService.getAvailableClasses();
+    }
+
+    @PutMapping("/{id}")
+    public ClassSessionResponseDTO updateClass(@PathVariable Long id, @RequestBody ClassSessionRequestDTO request){
+        return classSessionService.updateClass(id, request);
+    }
+
+    @PutMapping("/{id}/status")
+    public ClassSessionResponseDTO updateClassStatus(@PathVariable Long id, @RequestParam ClassStatus newStatus) {
+        return classSessionService.updateClassStatus(id, newStatus);
     }
 
     @DeleteMapping("/{id}")
