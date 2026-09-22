@@ -11,10 +11,12 @@ import com.nkydev.repositories.BookingRepository;
 import com.nkydev.repositories.ClassSessionRepository;
 import com.nkydev.repositories.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.awt.print.Book;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Service
 public class BookingService {
@@ -29,6 +31,7 @@ public class BookingService {
         this.classSessionRepository = classSessionRepository;
     }
 
+    @Transactional
     public BookingResponseDTO createBooking(BookingRequestDTO request) {
 
         User student = userRepository.findById(request.studentId())
@@ -80,6 +83,55 @@ public class BookingService {
         Booking savedBooking = bookingRepository.save(booking);
 
         return mapToBooking(savedBooking);
+    }
+
+    @Transactional(readOnly = true)
+    public List<BookingResponseDTO> getAllBookings() {
+        return bookingRepository.findAll()
+                .stream()
+                .map(this::mapToBooking)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public BookingResponseDTO getBookingById(Long id) {
+        Booking booking =  bookingRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Booking not found with ID: " + id));
+
+        return mapToBooking(booking);
+    }
+
+    @Transactional
+    public BookingResponseDTO updateBooking(Long id, BookingRequestDTO request) {
+        Booking booking = bookingRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Booking not found with ID: " + id));
+
+        User student = userRepository.findById(request.studentId())
+                .orElseThrow(() -> new RuntimeException("User not found with ID: " + request.studentId()));
+
+        ClassSession classSession = classSessionRepository.findById(request.classSessionId())
+                .orElseThrow(() -> new RuntimeException("Class not found with ID: " + request.classSessionId()));
+
+        booking.setDate(request.date());
+        booking.setTime(request.time());
+        booking.setStatus(request.status());
+        booking.setStudent(student);
+        booking.setClassSession(classSession);
+
+        return mapToBooking(booking);
+    }
+
+    @Transactional
+    public BookingResponseDTO cancelBooking(Long id) {
+        Booking booking = bookingRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Booking not found with ID: " + id));
+
+        booking.setStatus(BookingStatus.CANCELLED);
+        return mapToBooking(booking);
+    }
+
+    public void deleteBooking(Long id) {
+        bookingRepository.deleteById(id);
     }
 
     public BookingResponseDTO mapToBooking(Booking booking){

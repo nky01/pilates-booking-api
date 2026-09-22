@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "bookings")
-public class Booking { // reservas confirmadas
+public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
