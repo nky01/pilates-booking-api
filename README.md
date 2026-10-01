@@ -58,5 +58,3 @@ Ejecutar la aplicación:
 
 * **Nicole Belen Cayo** — Backend Developer
 * **GitHub:** [@nky01](https://github.com/nky01)
-# test of branch
-# Cambio para PR
