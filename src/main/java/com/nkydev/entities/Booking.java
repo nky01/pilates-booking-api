@@ -26,7 +26,7 @@ public class Booking {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id", nullable = false)
-    private User student;
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "schedule_id", nullable = false)
@@ -39,7 +39,7 @@ public class Booking {
         this.date = date;
         this.time = time;
         this.status = status;
-        this.student = student;
+        this.user = student;
         this.classSession = classSession;
     }
 
@@ -76,11 +76,11 @@ public class Booking {
     }
 
     public User getStudent() {
-        return student;
+        return user;
     }
 
     public void setStudent(User student) {
-        this.student = student;
+        this.user = student;
     }
 
     public ClassSession getClassSession() {
@@ -95,11 +95,11 @@ public class Booking {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Booking booking = (Booking) o;
-        return Objects.equals(id, booking.id) && Objects.equals(date, booking.date) && Objects.equals(time, booking.time) && status == booking.status && Objects.equals(student, booking.student) && Objects.equals(classSession, booking.classSession);
+        return Objects.equals(id, booking.id) && Objects.equals(date, booking.date) && Objects.equals(time, booking.time) && status == booking.status && Objects.equals(user, booking.user) && Objects.equals(classSession, booking.classSession);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, date, time, status, student, classSession);
+        return Objects.hash(id, date, time, status, user, classSession);
     }
 }
