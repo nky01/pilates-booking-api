@@ -26,20 +26,20 @@ public class Booking {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id", nullable = false)
-    private User user;
+    private User student;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "schedule_id", nullable = false)
     private ClassSession classSession;
 
-    public Booking(){}
+    public Booking() {}
 
     public Booking(Long id, LocalDate date, LocalTime time, BookingStatus status, User student, ClassSession classSession) {
         this.id = id;
         this.date = date;
         this.time = time;
         this.status = status;
-        this.user = student;
+        this.student = student;
         this.classSession = classSession;
     }
 
@@ -76,11 +76,11 @@ public class Booking {
     }
 
     public User getStudent() {
-        return user;
+        return student;
     }
 
     public void setStudent(User student) {
-        this.user = student;
+        this.student = student;
     }
 
     public ClassSession getClassSession() {
@@ -95,11 +95,16 @@ public class Booking {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Booking booking = (Booking) o;
-        return Objects.equals(id, booking.id) && Objects.equals(date, booking.date) && Objects.equals(time, booking.time) && status == booking.status && Objects.equals(user, booking.user) && Objects.equals(classSession, booking.classSession);
+        return Objects.equals(id, booking.id)
+                && Objects.equals(date, booking.date)
+                && Objects.equals(time, booking.time)
+                && status == booking.status
+                && Objects.equals(student, booking.student)
+                && Objects.equals(classSession, booking.classSession);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, date, time, status, user, classSession);
+        return Objects.hash(id, date, time, status, student, classSession);
     }
 }

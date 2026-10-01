@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table (name = "users")
+@Table(name = "users")
 public class User {
 
     @Id
@@ -26,21 +26,21 @@ public class User {
     private String phone;
 
     @Enumerated(EnumType.STRING)
-    private com.nkydev.enums.Role role;
+    private Role role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Booking> bookings = new ArrayList<>();
 
-    public User(){}
+    public User() {}
 
-    public User(Long id, String fullName, String email, String password, String phone, Role role, List<Booking> booking) {
+    public User(Long id, String fullName, String email, String password, String phone, Role role, List<Booking> bookings) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.password = password;
         this.phone = phone;
         this.role = role;
-        this.bookings = booking;
+        this.bookings = bookings;
     }
 
     public List<Booking> getBookings() {
@@ -103,7 +103,12 @@ public class User {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(fullName, user.fullName) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(phone, user.phone) && Objects.equals(role, user.role);
+        return Objects.equals(id, user.id)
+                && Objects.equals(fullName, user.fullName)
+                && Objects.equals(email, user.email)
+                && Objects.equals(password, user.password)
+                && Objects.equals(phone, user.phone)
+                && Objects.equals(role, user.role);
     }
 
     @Override
