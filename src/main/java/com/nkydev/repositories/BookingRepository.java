@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
+
     boolean existsByStudentIdAndClassSessionIdAndStatus(
             Long studentId,
             Long classSessionId,
@@ -35,5 +36,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     long countByClassSessionIdAndStatus(
             Long classSessionId,
-            BookingStatus status);
+            BookingStatus status
+    );
 }

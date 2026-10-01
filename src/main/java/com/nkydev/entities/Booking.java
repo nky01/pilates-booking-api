@@ -32,7 +32,7 @@ public class Booking {
     @JoinColumn(name = "schedule_id", nullable = false)
     private ClassSession classSession;
 
-    public Booking(){}
+    public Booking() {}
 
     public Booking(Long id, LocalDate date, LocalTime time, BookingStatus status, User student, ClassSession classSession) {
         this.id = id;
@@ -95,7 +95,12 @@ public class Booking {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Booking booking = (Booking) o;
-        return Objects.equals(id, booking.id) && Objects.equals(date, booking.date) && Objects.equals(time, booking.time) && status == booking.status && Objects.equals(student, booking.student) && Objects.equals(classSession, booking.classSession);
+        return Objects.equals(id, booking.id)
+                && Objects.equals(date, booking.date)
+                && Objects.equals(time, booking.time)
+                && status == booking.status
+                && Objects.equals(student, booking.student)
+                && Objects.equals(classSession, booking.classSession);
     }
 
     @Override
